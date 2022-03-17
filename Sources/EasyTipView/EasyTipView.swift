@@ -238,6 +238,7 @@ open class EasyTipView: UIView {
         }
         
         public struct Positioning {
+            public var bubbleOffset         = CGPoint(x: 0, y: 0)
             public var bubbleInsets         = UIEdgeInsets(top: 1.0, left: 1.0, bottom: 1.0, right: 1.0)
             public var contentInsets        = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
             public var maxWidth             = CGFloat(200)
@@ -441,16 +442,15 @@ open class EasyTipView: UIView {
         switch position {
         case .top, .any:
             xOrigin = refViewFrame.center.x - tipViewSize.width / 2
-            yOrigin = refViewFrame.y + refViewFrame.height
+            yOrigin = refViewFrame.y + refViewFrame.height + preferences.positioning.bubbleOffset.y
         case .bottom:
             xOrigin = refViewFrame.center.x - tipViewSize.width / 2
-            yOrigin = refViewFrame.y - tipViewSize.height
+            yOrigin = refViewFrame.y - tipViewSize.height + preferences.positioning.bubbleOffset.y
         case .right:
-            xOrigin = refViewFrame.x - tipViewSize.width
-            yOrigin = refViewFrame.center.y - tipViewSize.height / 2
+            xOrigin = refViewFrame.x - tipViewSize.width + preferences.positioning.bubbleOffset.x
         case .left:
-            xOrigin = refViewFrame.x + refViewFrame.width
-            yOrigin = refViewFrame.center.y - tipViewSize.height / 2
+            xOrigin = refViewFrame.x + refViewFrame.width + preferences.positioning.bubbleOffset.x
+            yOrigin = refViewFrame.center.y - tipViewSize.height / 2 
         }
         
         var frame = CGRect(x: xOrigin, y: yOrigin, width: tipViewSize.width, height: tipViewSize.height)
