@@ -476,7 +476,18 @@ open class EasyTipView: UIView {
     }
     
     fileprivate func isFrameValid(_ frame: CGRect, forRefViewFrame: CGRect, withinSuperviewFrame: CGRect) -> Bool {
-        return !frame.intersects(forRefViewFrame)
+        var validFrame = forRefViewFrame
+        validFrame.x += preferences.positioning.bubbleOffset.x
+        validFrame.y += preferences.positioning.bubbleOffset.y
+        validFrame.size.width -= preferences.positioning.bubbleOffset.x
+        validFrame.size.height -= preferences.positioning.bubbleOffset.y
+        if (validFrame.size.width < 0) {
+            validFrame.size.width = 0
+        }
+        if (validFrame.size.height < 0) {
+            validFrame.size.height = 0
+        }
+        return !frame.intersects(validFrame)
     }
     
     fileprivate func arrange(withinSuperview superview: UIView) {
